@@ -1,0 +1,393 @@
+﻿#!/usr/bin/env python
+# coding: utf-8
+
+# In[4]:
+
+
+# Q.1 Define and create a Dataframe using Pandas.
+
+import pandas as pd
+dataframe1 = pd.DataFrame(['A', 'B', 'C', 'D'])
+print("DataFrame Created is", dataframe1)
+
+
+# In[5]:
+
+
+# Q.2 How can we calculate the standard deviation from the series.
+
+series1 = pd.Series([0.9, 0.8, 0.3, 0.2])
+print("Standard Deviation for Series1",series1.std())
+
+
+# In[6]:
+
+
+# Q.3 Create a Dataframe using List given below: lis= [‘Python’,’Numpy’,’Pandas’]
+
+lis=['Python','Numpy','Pandas']
+df_list=pd.DataFrame(lis)
+print("the Dataframe from list\n",df_list)
+
+
+# In[7]:
+
+
+# Q.4 Create a Series from dictionary given below: info = {'x' : 0., 'y' : 1., 'z' : 2.}
+
+info = {'x' : 0, 'y' : 1, 'z' : 2}
+ser_dc=pd.Series(info)
+print("The Series from Dictionary is",ser_dc)
+
+
+# In[8]:
+
+
+# Q.5 How will you create an empty Dataframe in Pandas?
+
+df_1 = pd.DataFrame()   
+print("Empty DataFrame",df_1)
+
+
+# In[10]:
+
+
+# Q.6
+# i) Add a column to that pandas Dataframe that you created in Q.1
+# ii) Change index of that Dataframe.
+
+print("Dataframe Created in 1st Question",dataframe1)
+Age=['10','12','13','14']
+dataframe1['Age']=Age
+#i) Add a column to that pandas Dataframe that you created in Q1
+print("Dataframe after Adding Column\n",dataframe1)
+# ii) Change index of that Dataframe.
+newindex=['A1','B1','C1','D1']
+print("Dataframe after Changing Index\n",dataframe1.set_index([pd.Index(['A1','B1', 'C1', 'D1'])]))
+
+
+# In[11]:
+
+
+# Q.7 Get the following from this dataframe:
+
+# import random
+# A = [ random.randint(0,100) for i in range(10) ]
+# B = [ random.randint(0,100) for i in range(10) ]
+# df = pd.DataFrame({ 'field_A': A, 'field_B': B })
+# i) mean
+# ii) median
+# iii) mode
+# iv) 75th percentile
+# v) 90th percentile
+# vi) 99th percentile
+
+
+
+import random
+A = [ random.randint(0,100) for i in range(10) ]
+B = [ random.randint(0,100) for i in range(10) ]
+df = pd.DataFrame({ 'field_A': A, 'field_B': B })
+print("\n Mean is",df.mean())
+print("\n Median is",df.median())
+print("\n Mode is",df.mode())
+print("\n 75th Percentile",df.quantile(0.75))
+print("\n 90th Percentile",df.quantile(0.9))
+print("\n 99th Percentile",df.quantile(0.99))
+
+
+# In[12]:
+
+
+# Q.8 How do you count how many unique rows a DataFrame has (i.e. ignore all rows that are duplicates)?
+
+data={'Name': ['Ramesh','Siddharth','Siddhesh','Siddharth','Karthik','Sunny','Ramesh'],
+          'Age': [36,28,33,28,28,31,36]}
+df=pd.DataFrame(data)
+print(pd.DataFrame(df,columns=['Name','Age']))
+print("No of Unique Rows are",len(df.drop_duplicates()))
+
+
+# In[13]:
+
+
+# Q.9 How to keep only top 2 most frequent values as it is and replace everything else as ‘Other’? Take the following as input.
+
+# np.random.RandomState(100)
+# ser = pd.Series(np.random.randint(1, 5, [12]))
+
+
+import numpy as np
+np.random.RandomState(100)
+ser = pd.Series(np.random.randint(1, 5, [12]))
+print("Original Series is",ser)
+ser[~ser.isin(ser.value_counts().index[:2])] = 'Other'
+print("After not replacing top 2 most frequent values and  everything else as Other",ser)
+
+
+# In[14]:
+
+
+# Q.10 A DataFrame has a column of groups 'grps' and and column of integer values 'vals':
+
+# df = pd.DataFrame({'grps':
+# list('aaabbcaabcccbbc'),'vals': [12, 345, 3, 1, 45, 14 , 4, 52, 54, 23, 235,21, 57, 3, 87]})
+
+df = pd.DataFrame({'grps':list('aaabbcaabcccbbc'),'vals': [12, 345, 3, 1, 45, 14 , 4, 52, 54, 23, 235,21, 57, 3, 87]})
+df
+
+
+# In[15]:
+
+
+# Q.10
+# For each group, find the sum of the three greatest values. You should end up with the answer as follows:
+# grps
+# a 409
+# b 156
+# c 345
+
+print("For each group, find the sum of the three greatest values",df.groupby('grps').vals.nlargest(3).sum(level=0))
+
+
+# In[16]:
+
+
+# Q.10
+# Create a dataframe for the following to answer the next few questions
+# data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat','snake', 'cat', 'dog', 'dog'],
+# 'age': [2.5, 3, 0.5, np.nan, 5, 2, 4.5, np.nan, 7, 3],
+# 'visits': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+# 'priority': ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'yes', 'no','no']}
+# labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+
+data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat','snake', 'cat', 'dog', 'dog'],
+'age': [2.5, 3, 0.5, np.nan, 5, 2, 4.5, np.nan, 7, 3],
+'visits': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+'priority': ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'yes', 'no','no']}
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+animals_data=pd.DataFrame(data,index=labels)
+animals_data
+
+
+# In[17]:
+
+
+# Q.11 Display a summary of the basic information about this DataFrame and its data (hint: there is a single method that can
+# be called on the DataFrame).
+
+
+print('\n Summary of Basic Description : \n',animals_data.info()) 
+print('\n\n Statistical information:\n',animals_data.describe())
+
+
+# In[20]:
+
+
+# Q.12 Select the rows where the age is between 2 and 4 (inclusive).
+
+print("Rows between age 2 and 4\n",animals_data.sort_values(by='age')[2:4])
+
+
+# In[22]:
+
+
+# Q.13 Select the data in rows [3, 4, 8] and in columns ['animal', 'age'].
+
+print("Data in rows 3,4,8 and in columns animal,age\n",animals_data.iloc[[2,4,7]][['animal','age']])
+
+
+# In[23]:
+
+
+# Q.14 Select the rows where the age is missing, i.e. it is NaN.
+
+print("Rows where age is missing i.e NAN\n",animals_data[animals_data['age'].isnull()])
+
+
+# In[24]:
+
+
+# Q.15 Select the rows where the animal is a cat and the age is less than 3.
+
+print("Animal is Cat and age is less than 3\n",animals_data[(animals_data.animal=='cat') & (animals_data.age<3)])
+
+
+# In[25]:
+
+
+# Q.16 Change the age in row 'f' to 1.5.
+
+animals_data.loc['f','age']=1.5 
+print("Changing age in row f to 1.5\n",animals_data)
+
+
+# In[36]:
+
+
+# Q.17 In the 'animal' column, change the 'snake' entries to 'python'.
+
+animals_data['animal'].replace({"snake":"python"})
+print("After changing snake entries to python\n",animals_data)
+
+
+# In[32]:
+
+
+# Q.18 Count the number of each type of animal in df.
+
+print("Count number of each type of animal\n",animals_data['animal'].value_counts(ascending=True))
+
+
+# In[33]:
+
+
+# Q.19 The 'priority' column contains the values 'yes' and 'no'. Replace this column with a column of boolean values: 'yes' should be True and 'no' should be False.
+
+animals_data['priority'].replace({"yes":True,"no":False},inplace=True)
+print("After changing priority column Yes to True and No to False\n",animals_data)
+
+
+# In[37]:
+
+
+# Q.20 For each animal type and each number of visits, find the mean age. In other words, each row is an animal, each column is a number of visits and the values are the mean ages (hint: use a pivot table).
+# table = animals_data.pivot_table(df, values=['animal'],aggfunc={'age': np.mean})
+
+mean_age = pd.pivot_table(animals_data, values=['age'],index=['animal'],columns=['visits'],aggfunc=np.mean)
+print("Mean ages\n",mean_age)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
